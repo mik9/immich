@@ -1015,6 +1015,11 @@ export class VaapiHwDecodeConfig extends VaapiSwDecodeConfig {
       return [];
     }
 
+    // software tonemapping because opencl doesn't work on my machine
+    return [
+      'hwdownload', 'format=yuv420p', ...super.getToneMapping(videoStream), 'format=nv12', 'hwupload=extra_hw_frames=64'
+    ];
+
     const { matrix, primaries, transfer } = this.getColors();
     const tonemapOptions = [
       'desat=0',

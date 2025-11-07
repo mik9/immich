@@ -533,7 +533,7 @@ export class MediaService extends BaseService {
       targetResolution: image.preview.size.toString(),
       tonemap: ToneMapping.Hable,
     });
-    const thumbnailConfig = ThumbnailConfig.create({
+    const thumbConfig = ThumbnailConfig.create({
       ...ffmpeg,
       targetResolution: image.thumbnail.size.toString(),
       tonemap: ToneMapping.Hable,
