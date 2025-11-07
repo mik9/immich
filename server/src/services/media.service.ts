@@ -19,6 +19,7 @@ import {
   QueueName,
   RawExtractedFormat,
   StorageFolder,
+  ToneMapping,
   TranscodeHardwareAcceleration,
   TranscodePolicy,
   TranscodeTarget,
@@ -527,8 +528,16 @@ export class MediaService extends BaseService {
       throw new Error(`Missing video metadata for asset ${asset.id}`);
     }
 
-    const previewConfig = ThumbnailConfig.create({ ...ffmpeg, targetResolution: image.preview.size.toString() });
-    const thumbConfig = ThumbnailConfig.create({ ...ffmpeg, targetResolution: image.thumbnail.size.toString() });
+    const previewConfig = ThumbnailConfig.create({
+      ...ffmpeg,
+      targetResolution: image.preview.size.toString(),
+      tonemap: ToneMapping.Hable,
+    });
+    const thumbnailConfig = ThumbnailConfig.create({
+      ...ffmpeg,
+      targetResolution: image.thumbnail.size.toString(),
+      tonemap: ToneMapping.Hable,
+    });
     const previewOptions = previewConfig.getCommand(TranscodeTarget.Video, videoStream, undefined, format ?? undefined);
     const thumbnailOptions = thumbConfig.getCommand(TranscodeTarget.Video, videoStream, undefined, format ?? undefined);
 
