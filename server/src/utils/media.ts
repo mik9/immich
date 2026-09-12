@@ -925,7 +925,8 @@ export class VaapiSwDecodeConfig extends BaseHWConfig {
   getFilterOptions(videoStream: VideoStreamInfo) {
     const tonemapOptions = this.getToneMapping(videoStream);
     const options = [...tonemapOptions, 'hwupload=extra_hw_frames=64'];
-    const format = videoStream.isHDR && tonemapOptions.length === 0 ? 'p010' : 'nv12';
+    const isHDR = videoStream.colorTransfer === ColorTransfer.Smpte2084 || videoStream.colorTransfer === ColorTransfer.AribStdB67;
+    const format = isHDR && tonemapOptions.length === 0 ? 'p010' : 'nv12';
     if (this.shouldScale(videoStream)) {
       options.push(`scale_vaapi=${this.getScaling(videoStream)}:mode=hq:format=${format}`);
     } else {
